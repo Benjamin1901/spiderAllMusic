@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itkim.dao.TbCommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.itkim.pojo.TbComments" >
+    <id column="commentId" property="commentid" jdbcType="BIGINT" />
+    <result column="songId" property="songid" jdbcType="BIGINT" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="nickName" property="nickname" jdbcType="VARCHAR" />
+    <result column="likedCount" property="likedcount" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="BIGINT" />
+    <result column="avatarUrl" property="avatarurl" jdbcType="VARCHAR" />
+    <result column="isHotComments" property="ishotcomments" jdbcType="INTEGER" />
+    <result column="commentNum" property="commentnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    commentId, songId, userId, nickName, likedCount, comment, time, avatarUrl, isHotComments, 
+    commentNum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itkim.pojo.TbCommentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_comments
+    where commentId = #{commentid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_comments
+    where commentId = #{commentid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itkim.pojo.TbCommentsExample" >
+    delete from tb_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itkim.pojo.TbComments" >
+    insert IGNORE into tb_comments (commentId, songId, userId,
+      nickName, likedCount, comment, 
+      time, avatarUrl, isHotComments, 
+      commentNum)
+    values (#{commentid,jdbcType=BIGINT}, #{songid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{nickname,jdbcType=VARCHAR}, #{likedcount,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{time,jdbcType=BIGINT}, #{avatarurl,jdbcType=VARCHAR}, #{ishotcomments,jdbcType=INTEGER}, 
+      #{commentnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itkim.pojo.TbComments" >
+    insert into tb_comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentid != null" >
+        commentId,
+      </if>
+      <if test="songid != null" >
+        songId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="nickname != null" >
+        nickName,
+      </if>
+      <if test="likedcount != null" >
+        likedCount,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="avatarurl != null" >
+        avatarUrl,
+      </if>
+      <if test="ishotcomments != null" >
+        isHotComments,
+      </if>
+      <if test="commentnum != null" >
+        commentNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentid != null" >
+        #{commentid,jdbcType=BIGINT},
+      </if>
+      <if test="songid != null" >
+        #{songid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="likedcount != null" >
+        #{likedcount,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="avatarurl != null" >
+        #{avatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ishotcomments != null" >
+        #{ishotcomments,jdbcType=INTEGER},
+      </if>
+      <if test="commentnum != null" >
+        #{commentnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itkim.pojo.TbCommentsExample" resultType="java.lang.Integer" >
+    select count(*) from tb_comments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_comments
+    <set >
+      <if test="record.commentid != null" >
+        commentId = #{record.commentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.songid != null" >
+        songId = #{record.songid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.nickname != null" >
+        nickName = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.likedcount != null" >
+        likedCount = #{record.likedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=BIGINT},
+      </if>
+      <if test="record.avatarurl != null" >
+        avatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ishotcomments != null" >
+        isHotComments = #{record.ishotcomments,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentnum != null" >
+        commentNum = #{record.commentnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_comments
+    set commentId = #{record.commentid,jdbcType=BIGINT},
+      songId = #{record.songid,jdbcType=BIGINT},
+      userId = #{record.userid,jdbcType=BIGINT},
+      nickName = #{record.nickname,jdbcType=VARCHAR},
+      likedCount = #{record.likedcount,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=BIGINT},
+      avatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
+      isHotComments = #{record.ishotcomments,jdbcType=INTEGER},
+      commentNum = #{record.commentnum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itkim.pojo.TbComments" >
+    update tb_comments
+    <set >
+      <if test="songid != null" >
+        songId = #{songid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="nickname != null" >
+        nickName = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="likedcount != null" >
+        likedCount = #{likedcount,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="avatarurl != null" >
+        avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ishotcomments != null" >
+        isHotComments = #{ishotcomments,jdbcType=INTEGER},
+      </if>
+      <if test="commentnum != null" >
+        commentNum = #{commentnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where commentId = #{commentid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itkim.pojo.TbComments" >
+    update tb_comments
+    set songId = #{songid,jdbcType=BIGINT},
+      userId = #{userid,jdbcType=BIGINT},
+      nickName = #{nickname,jdbcType=VARCHAR},
+      likedCount = #{likedcount,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      time = #{time,jdbcType=BIGINT},
+      avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      isHotComments = #{ishotcomments,jdbcType=INTEGER},
+      commentNum = #{commentnum,jdbcType=INTEGER}
+    where commentId = #{commentid,jdbcType=BIGINT}
+  </update>
+</mapper>

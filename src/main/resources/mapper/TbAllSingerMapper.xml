@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itkim.dao.TbAllSingerMapper" >
+  <resultMap id="BaseResultMap" type="com.itkim.pojo.TbAllSinger" >
+    <id column="singerId" property="singerid" jdbcType="BIGINT" />
+    <result column="singerName" property="singername" jdbcType="VARCHAR" />
+    <result column="singerHref" property="singerhref" jdbcType="VARCHAR" />
+    <result column="singerDesc" property="singerdesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    singerId, singerName, singerHref, singerDesc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itkim.pojo.TbAllSingerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_all_singer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_all_singer
+    where singerId = #{singerid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_all_singer
+    where singerId = #{singerid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itkim.pojo.TbAllSingerExample" >
+    delete from tb_all_singer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itkim.pojo.TbAllSinger" >
+    insert ignore into tb_all_singer (singerId, singerName, singerHref,
+      singerDesc)
+    values (#{singerid,jdbcType=BIGINT}, #{singername,jdbcType=VARCHAR}, #{singerhref,jdbcType=VARCHAR}, 
+      #{singerdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itkim.pojo.TbAllSinger" >
+    insert ignore into tb_all_singer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="singerid != null" >
+        singerId,
+      </if>
+      <if test="singername != null" >
+        singerName,
+      </if>
+      <if test="singerhref != null" >
+        singerHref,
+      </if>
+      <if test="singerdesc != null" >
+        singerDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="singerid != null" >
+        #{singerid,jdbcType=BIGINT},
+      </if>
+      <if test="singername != null" >
+        #{singername,jdbcType=VARCHAR},
+      </if>
+      <if test="singerhref != null" >
+        #{singerhref,jdbcType=VARCHAR},
+      </if>
+      <if test="singerdesc != null" >
+        #{singerdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itkim.pojo.TbAllSingerExample" resultType="java.lang.Integer" >
+    select count(*) from tb_all_singer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_all_singer
+    <set >
+      <if test="record.singerid != null" >
+        singerId = #{record.singerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.singername != null" >
+        singerName = #{record.singername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singerhref != null" >
+        singerHref = #{record.singerhref,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singerdesc != null" >
+        singerDesc = #{record.singerdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_all_singer
+    set singerId = #{record.singerid,jdbcType=BIGINT},
+      singerName = #{record.singername,jdbcType=VARCHAR},
+      singerHref = #{record.singerhref,jdbcType=VARCHAR},
+      singerDesc = #{record.singerdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itkim.pojo.TbAllSinger" >
+    update tb_all_singer
+    <set >
+      <if test="singername != null" >
+        singerName = #{singername,jdbcType=VARCHAR},
+      </if>
+      <if test="singerhref != null" >
+        singerHref = #{singerhref,jdbcType=VARCHAR},
+      </if>
+      <if test="singerdesc != null" >
+        singerDesc = #{singerdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where singerId = #{singerid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itkim.pojo.TbAllSinger" >
+    update tb_all_singer
+    set singerName = #{singername,jdbcType=VARCHAR},
+      singerHref = #{singerhref,jdbcType=VARCHAR},
+      singerDesc = #{singerdesc,jdbcType=VARCHAR}
+    where singerId = #{singerid,jdbcType=BIGINT}
+  </update>
+</mapper>

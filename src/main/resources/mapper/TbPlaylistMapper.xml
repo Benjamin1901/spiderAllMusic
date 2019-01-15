@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itkim.dao.TbPlaylistMapper" >
+  <resultMap id="BaseResultMap" type="com.itkim.pojo.TbPlaylist" >
+    <id column="playlistId" property="playlistid" jdbcType="BIGINT" />
+    <result column="listTitle" property="listtitle" jdbcType="VARCHAR" />
+    <result column="listHref" property="listhref" jdbcType="VARCHAR" />
+    <result column="photoHref" property="photohref" jdbcType="VARCHAR" />
+    <result column="isHot" property="ishot" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    playlistId, listTitle, listHref, photoHref, isHot
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itkim.pojo.TbPlaylistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_playlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_playlist
+    where playlistId = #{playlistid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_playlist
+    where playlistId = #{playlistid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itkim.pojo.TbPlaylistExample" >
+    delete from tb_playlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itkim.pojo.TbPlaylist" >
+    insert IGNORE into tb_playlist (playlistId, listTitle, listHref,
+      photoHref, isHot)
+    values (#{playlistid,jdbcType=BIGINT}, #{listtitle,jdbcType=VARCHAR}, #{listhref,jdbcType=VARCHAR}, 
+      #{photohref,jdbcType=VARCHAR}, #{ishot,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itkim.pojo.TbPlaylist" >
+    insert into tb_playlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="playlistid != null" >
+        playlistId,
+      </if>
+      <if test="listtitle != null" >
+        listTitle,
+      </if>
+      <if test="listhref != null" >
+        listHref,
+      </if>
+      <if test="photohref != null" >
+        photoHref,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="playlistid != null" >
+        #{playlistid,jdbcType=BIGINT},
+      </if>
+      <if test="listtitle != null" >
+        #{listtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="listhref != null" >
+        #{listhref,jdbcType=VARCHAR},
+      </if>
+      <if test="photohref != null" >
+        #{photohref,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itkim.pojo.TbPlaylistExample" resultType="java.lang.Integer" >
+    select count(*) from tb_playlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_playlist
+    <set >
+      <if test="record.playlistid != null" >
+        playlistId = #{record.playlistid,jdbcType=BIGINT},
+      </if>
+      <if test="record.listtitle != null" >
+        listTitle = #{record.listtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.listhref != null" >
+        listHref = #{record.listhref,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photohref != null" >
+        photoHref = #{record.photohref,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ishot != null" >
+        isHot = #{record.ishot,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_playlist
+    set playlistId = #{record.playlistid,jdbcType=BIGINT},
+      listTitle = #{record.listtitle,jdbcType=VARCHAR},
+      listHref = #{record.listhref,jdbcType=VARCHAR},
+      photoHref = #{record.photohref,jdbcType=VARCHAR},
+      isHot = #{record.ishot,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itkim.pojo.TbPlaylist" >
+    update tb_playlist
+    <set >
+      <if test="listtitle != null" >
+        listTitle = #{listtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="listhref != null" >
+        listHref = #{listhref,jdbcType=VARCHAR},
+      </if>
+      <if test="photohref != null" >
+        photoHref = #{photohref,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=INTEGER},
+      </if>
+    </set>
+    where playlistId = #{playlistid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itkim.pojo.TbPlaylist" >
+    update tb_playlist
+    set listTitle = #{listtitle,jdbcType=VARCHAR},
+      listHref = #{listhref,jdbcType=VARCHAR},
+      photoHref = #{photohref,jdbcType=VARCHAR},
+      isHot = #{ishot,jdbcType=INTEGER}
+    where playlistId = #{playlistid,jdbcType=BIGINT}
+  </update>
+</mapper>
